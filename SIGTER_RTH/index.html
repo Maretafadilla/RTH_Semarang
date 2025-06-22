@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Index - Consulting Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+<script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+<style>
+  .mapboxgl-popup-content {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+  }
+  .mapboxgl-ctrl-top-right {
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+.hero {
+  background-color: #004d40;
+  padding: 80px 0;
+}
+.bg-green {
+  background-color: #004d40
+}
+
+.hero .hero-content h1 {
+  color: white;
+}
+
+.hero p {
+  color: #f1f1f1;
+}
+.hero .hero-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+}
+.hero img {
+  border-radius: 12px;
+  max-width: 100%;
+  height: auto;
+}
+.hero .hero-content {
+  padding-right: 20px;
+}
+.hero p {
+  color: #f1f1f1;
+}
+.hero img {
+  margin-top: 1rem;
+}
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 0;
+  }
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  .hero .hero-content {
+    padding: 10px;
+  }
+  .hero .image-container {
+    padding-top: 0;
+  }
+}
+.about-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.about .about-content h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #004d40;
+  margin-bottom: 1rem;
+}
+
+.about .about-content p {
+  text-align: justify;
+  color: #333;
+  line-height: 1.7;
+}
+
+.about .about-image {
+  text-align: center;
+}
+
+.about .about-image em {
+  display: block;
+  margin-top: 0.5rem;
+  font-style: italic;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .about .about-image,
+  .about .about-content {
+    text-align: center;
+  }
+
+  .about .about-content p {
+    text-align: justify;
+  }
+}
+.about .about-content {
+  margin-top: -30px; 
+}
+.footer {
+  background-color: #f1f8f6; /* atau sesuaikan */
+  padding: 5px 0;
+}
+
+.footer p {
+  text-align: center;
+  margin: 0;
+  color: #333;
+  font-size: 14px;
+}
+
+</style>
+<link
+  rel="stylesheet"
+  href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css"
+  type="text/css"
+/>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.webp" alt=""> -->
+        <h1 class="sitename">Peta Ruang Terbuka Hijau Kota Semarang</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active">Home</a></li>
+          <li class="dropdown"><a href="#"><span>Peta</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#statis">Statis</a></li>
+              <li><a href="#interaktif">Interaktif</a></li>
+            </ul>
+          </li>
+          
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+   <!-- Hero Section -->
+    <section id="hero" class="hero section bg-green">
+    <div class="container" data-aos="fade-up" data-aos-delay="10">
+    <div class="row align-items-center justify-content-center">
+
+      <!-- Teks -->
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="hero-content">
+          <h3 class="text-white fw-bold mb-4"> Kota Semarang</h3>
+          <p style="text-align: justify; color: rgb(255, 255, 255);">
+            Kota Semarang merupakan ibu kota Provinsi Jawa Tengah yang terletak di pesisir utara Pulau Jawa, merupakan salah satu kota metropolitan dengan peran penting dalam bidang ekonomi, pendidikan, perdagangan, dan pemerintahan. Wilayahnya terbagi menjadi dua bagian, yaitu Kota Bawah yang datar dan dekat laut, serta Kota Atas yang berbukit dan memiliki udara lebih sejuk. 
+            <br><br>
+            Seiring dengan pesatnya pertumbuhan penduduk dan pembangunan infrastruktur, Semarang menghadapi tantangan dalam menjaga keseimbangan antara pembangunan dan kelestarian lingkungan. Oleh karena itu, pengembangan Ruang Terbuka Hijau (RTH) menjadi langkah strategis untuk menciptakan kota yang lebih sehat, asri, dan layak huni. Melalui situs ini, masyarakat dapat mengakses informasi mengenai titik-titik RTH di Kota Semarang, lengkap dengan lokasi, jenis, dan fungsinya sebagai ruang publik yang bermanfaat bagi kehidupan perkotaan.
+          </p>
+        </div>
+      </div>
+
+      <!-- Gambar -->
+      <div class="col-lg-6 text-center">
+        <img src="assets/img/about/Kota Semarang.jpg" alt="Kota Semarang" class="img-fluid rounded shadow" style="max-height: 380px; object-fit: cover;">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+    <!-- About Section -->
+    <section id="statis" class="about section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="10">
+
+        <div class="row align-items-center justify-content-center">
+          <div class="col-lg-6" data-aos="zoom-out" data-aos-delay="200">
+            <div class="about-image">
+              <img src="assets\img\peta rth.jpg" alt="Peta Statis RTH Kota Semarang" class="img-fluid main-image">
+              <p style="margin-top: 0.5rem; text-align: center; margin-right: 70px;">
+            <em>Peta Rekomendasi Titik RTH</em>
+          </p>
+            </div>
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="about-content">
+              <h2>Peta Statis Rekomendasi Titik RTH</h2>
+              <p class="lead"></p>
+              <p>Rekomendasi titik Ruang Terbuka Hijau (RTH) di Kota Semarang didasarkan pada analisis beberapa faktor spasial, antara lain keberadaan RTH eksisting, batas administrasi kota, jaringan jalan, jenis tanah, kepadatan permukiman, dan kemiringan lahan. Lokasi yang ideal untuk pengembangan RTH adalah area yang belum memiliki RTH, berada di wilayah permukiman padat dengan akses jalan yang baik, memiliki jenis tanah yang subur, serta berada di lahan datar atau landai untuk memastikan kenyamanan dan aksesibilitas. </p>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+    <!-- /About Section -->
+    
+    <!-- Consultation Section -->
+    <section id="interaktif" class="consultation section light-background">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <div><span>Peta Interaktif RTH Kota Semarang</span></div>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+  <div class="cta-wrapper">
+    <div class="row align-items-center">
+      <div class="col-12">
+        <div class="map-box">
+
+          <!-- PETA dan LEGEND di sini -->
+          <div id="map" style="height: 500px; width: 100%; border: 1px solid #ccc; border-radius: 8px; position: relative;">
+            
+            <!-- LEGEND: dipindah ke dalam #map -->
+            <div id="legend" class="legend">
+            <h4>Legenda</h4>
+            <div><span class="legend-icon hijau"></span> Titik RTH</div>
+            <div><span class="legend-icon point"></span> Titik Rekomendasi RTH</div>
+            <div><span class="legend-icon merah"></span> Lokasi Pengguna</div>
+            <div><span class="legend-icon buffer"></span> Radius 500 meter</div>
+            </div>
+
+            </div>
+
+            
+          </div>
+
+          <p style="margin-top: 0.5rem; text-align: center;">
+            <em>Peta visual interaktif berisi persebaran lokasi taman dan hutan kota</em>
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    </section><!-- /Consultation Section -->
+
+    <!-- Why Choose Us Section -->
+    <section id="why-choose-us" class="why-choose-us section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="10">
+
+        <div class="row align-items-center">
+          <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
+            <div class="features-content">
+              <h2>Ruang Terbuka Hijau Kota Semarang</h2>
+              <p class="lead"></p>
+              <p>Ruang Terbuka Hijau (RTH) adalah area terbuka yang dipenuhi vegetasi dan berperan penting dalam menjaga keseimbangan lingkungan serta mendukung kualitas hidup masyarakat. Di Kota Semarang, pengelolaan RTH diatur dalam Perda No. 07 Tahun 2010, dengan acuan dari UU No. 26 Tahun 2007 yang menetapkan bahwa idealnya 30% dari total luas wilayah kota merupakan RTH, terdiri dari 20% RTH publik dan 10% RTH privat. RTH publik seperti taman kota, sabuk hijau, dan hutan kota dikelola oleh pemerintah, sedangkan RTH privat mencakup lahan milik pribadi seperti halaman rumah atau kebun. Selain mendukung aspek ekologis, RTH juga memberikan manfaat sosial, edukatif, estetika, dan rekreatif, sebagaimana dijelaskan dalam Perda No. 8 Tahun 2016, menjadikannya elemen penting dalam menciptakan kota yang sehat dan berkelanjutan.</p>
+               <div class="hero-stats">
+                <div class="stat-item">
+                  <h3><span data-purecounter-start="0" data-purecounter-end="142" data-purecounter-duration="1" class="purecounter"></span></h3>
+                  <p>Titik RTH Tersedia</p>
+                </div>
+                <div class="stat-item">
+                  <h3><span data-purecounter-start="0" data-purecounter-end="17" data-purecounter-duration="1" class="purecounter"></span></h3>
+                  <p>Titik Rekomendasi RTH</p>
+                </div>
+                <div class="stat-item">
+                  
+              
+                </div>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Why Choose Us Section -->
+  </main>
+
+  <footer id="footer" class="footer light-background">
+
+    <div class="container copyright text-center mt-4">
+      <p>©Teknik Geomatika UPN "Veteran" Yogyakarta</p>
+     
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+
+ 
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoibWFyZXRhZmFkaWxsbGEiLCJhIjoiY21idnlrcjhhMGluZDJyczZ3bTl1YXVibyJ9.WMcNX7Mk2bV_jat2mpnEbw';
+  const mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+
+  async function getAddressFromCoordinates(lng, lat) {
+    try {
+      const response = await mapboxClient.geocoding
+        .reverseGeocode({ query: [lng, lat], limit: 1 })
+        .send();
+      const match = response.body.features[0];
+      return match ? match.place_name : "Alamat tidak ditemukan";
+    } catch (error) {
+      return "Gagal mengambil alamat";
+    }
+  }
+</script>
+
+<!-- Script Peta -->
+<script>
+  // Inisialisasi peta
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [110.4381, -7.0051],
+    zoom: 13
+  });
+
+  const directions = new MapboxDirections({
+    accessToken: mapboxgl.accessToken,
+    unit: 'metric',
+    profile: 'mapbox/driving',
+    controls: {
+      inputs: true,
+      instructions: true
+    }
+  });
+  map.addControl(directions, 'top-right');
+
+  const rthData = [
+  { name: "Taman Tirto Agung Semarang", type: "Taman Kota", coords: [110.42708, -7.0642656], radius: 500 },
+  { name: "Taman Teknik", type: "Taman Kota", coords: [110.4408029, -7.0508766], radius: 500 },
+  { name: "Taman Teknik", type: "Taman Kota", coords: [110.4408181, -7.0508294], radius: 500 },
+  { name: "Taman Kedondong", type: "Taman Kota", coords: [110.4421627, -7.0052411], radius: 500 },
+  { name: "Taman Mangga", type: "Taman Kota", coords: [110.4355418, -7.0065967], radius: 500 },
+  { name: "Taman Erlangga Tengah", type: "Taman Kota", coords: [110.4276066, -6.9938589], radius: 500 },
+  { name: "Taman Singosari", type: "Taman Kota", coords: [110.424192, -7.001077], radius: 500 },
+  { name: "Taman Indonesia Kaya", type: "Taman Kota", coords: [110.4199805, -6.9924711], radius: 500 },
+  { name: "Taman Tugu Muda", type: "Taman Kota", coords: [110.409506, -6.9841239], radius: 500 },
+  { name: "Taman Widya Puraya", type: "Taman Kota", coords: [110.4385128, -7.0495477], radius: 500 },
+  { name: "Taman Rusa UNDIP", type: "Taman Kota", coords: [110.4398334, -7.0541288], radius: 500 },
+  { name: "Taman Pandanaran", type: "Taman Kota", coords: [110.4171924, -6.9878458], radius: 500 },
+  { name: "Taman Sudirman", type: "Taman Kota", coords: [110.4086844, -7.0053579], radius: 500 },
+  { name: "Taman Citra Satwa", type: "Taman Kota", coords: [110.4415037, -6.9894946], radius: 500 },
+  { name: "Taman Garuda", type: "Taman Kota", coords: [110.4268816, -6.9673511], radius: 500 },
+  { name: "Taman Sri Gunting", type: "Taman Kota", coords: [110.4278368, -6.9681547], radius: 500 },
+  { name: "Taman Tambakrejo", type: "Taman Kota", coords: [110.4429475, -6.9547691], radius: 500 },
+  { name: "Taman Cilosari", type: "Taman Kota", coords: [110.4400344, -6.9563011], radius: 500 },
+  { name: "Taman Diponegoro", type: "Taman Kota", coords: [110.4167133, -7.007673], radius: 500 },
+  { name: "Taman Sampangan", type: "Taman Kota", coords: [110.3959007, -7.0084299], radius: 500 },
+  { name: "Taman Madukoro", type: "Taman Kota", coords: [110.400653, -6.9809415], radius: 500 },
+  { name: "Hutan Kota Krobokan", type: "Taman Kota", coords: [110.3972218, -6.9755674], radius: 500 },
+  { name: "Hutan Kota Krobokan", type: "Taman Kota", coords: [110.396769, -6.9719941], radius: 500 },
+  { name: "Taman Kampung Jamu", type: "Taman Kota", coords: [110.3968886, -7.0037408], radius: 500 },
+  { name: "Taman Banjir Kanal Barat", type: "Taman Kota", coords: [110.4020801, -6.991405], radius: 500 },
+  { name: "Taman Bubakan", type: "Taman Kota", coords: [110.4307768, -6.9695785], radius: 500 },
+  { name: "Taman Tabanas", type: "Taman Kota", coords: [110.4211503, -7.0387382], radius: 500 },
+  { name: "Taman Komplek Kimar", type: "Taman Kota", coords: [110.443605, -7.0002049], radius: 500 },
+  { name: "Taman Mugas Timur", type: "Taman Kota", coords: [110.4174778, -6.9924224], radius: 500 },
+  { name: "Taman Lalu Lintas Semarang", type: "Taman Kota", coords: [110.2860771, -6.9690579], radius: 500 },
+  { name: "Taman Cempedak", type: "Taman Kota", coords: [110.4397498, -7.0011147], radius: 500 },
+  { name: "Taman Halmahera", type: "Taman Kota", coords: [110.4372672, -6.9951321], radius: 500 },
+  { name: "Taman Nada", type: "Taman Kota", coords: [110.4264217, -6.9835661], radius: 500 },
+  { name: "Taman Kartun", type: "Taman Kota", coords: [110.4285352, -6.984569], radius: 500 },
+  { name: "Taman Belik Sari", type: "Taman Kota", coords: [110.413203, -6.9984296], radius: 500 },
+  { name: "Taman Kartika Ayu", type: "Taman Kota", coords: [110.4079786, -6.9883004], radius: 500 },
+  { name: "Taman Siranda", type: "Taman Kota", coords: [110.4198599, -6.9997752], radius: 500 },
+  { name: "Taman Kasmaran Kalisari", type: "Taman Kota", coords: [110.4065118, -6.9909136], radius: 500 },
+  { name: "Taman Rejomulyo", type: "Taman Kota", coords: [110.4359475, -6.9840434], radius: 500 },
+  { name: "Taman Bermain Kelurahan Gayamsari", type: "Taman Kota", coords: [110.4491265, -7.0008501], radius: 500 },
+  { name: "Taman Bermain Rusunawa", type: "Taman Kota", coords: [110.4494507, -6.9644834], radius: 500 },
+  { name: "Taman Tirto Agung", type: "Taman Kota", coords: [110.427082, -7.0642311], radius: 500 },
+  { name: "Taman Progo", type: "Taman Kota", coords: [110.4357312, -6.9688134], radius: 500 },
+  { name: "Taman Sompok", type: "Taman Kota", coords: [110.4369113, -7.0020196], radius: 500 },
+  { name: "Taman Puri Mediterania", type: "Taman Kota", coords: [110.3875585, -6.964373], radius: 500 },
+  { name: "Taman Belimbing", type: "Taman Kota", coords: [110.435796, -7.0045627], radius: 500 },
+  { name: "Taman Raja Bambang Sadono", type: "Taman Kota", coords: [110.3655692, -6.9813005], radius: 500 },
+  { name: "Taman Nangka", type: "Taman Kota", coords: [110.4376508, -7.0079833], radius: 500 },
+  { name: "Taman Tematik RW II Miroto", type: "Taman Kota", coords: [110.4150662, -6.983092], radius: 500 },
+  { name: "Taman Beringin", type: "Taman Kota", coords: [110.4146831, -6.9755972], radius: 500 },
+  { name: "Taman Bumi Rejo", type: "Taman Kota", coords: [110.4159407, -7.0875689], radius: 500 },
+  { name: "Taman Maerokoco", type: "Taman Kota", coords: [110.3861415, -6.9606555], radius: 500 },
+  { name: "Taman masjid agung menara masjid", type: "Taman Kota", coords: [110.4466145, -6.9841609], radius: 500 },
+  { name: "Taman Pekunden", type: "Taman Kota", coords: [110.4142296, -6.9840031], radius: 500 },
+  { name: "Taman Pekunden Timur", type: "Taman Kota", coords: [110.4216034, -6.9872918], radius: 500 },
+  { name: "Taman Toga RW XIII", type: "Taman Kota", coords: [110.4202406, -7.089954], radius: 500 },
+  { name: "Taman Herbal Bejo", type: "Taman Kota", coords: [110.4281482, -6.9882071], radius: 500 },
+  { name: "Taman Stadion", type: "Taman Kota", coords: [110.4296931, -6.9888197], radius: 500 },
+  { name: "taman Toga Nusa Indah", type: "Taman Kota", coords: [110.4850504, -7.0066762], radius: 500 },
+  { name: "Taman Agro Mina", type: "Taman Kota", coords: [110.3646569, -6.9796585], radius: 500 },
+  { name: "Taman Grandis", type: "Taman Kota", coords: [110.3680156, -6.9788938], radius: 500 },
+  { name: "Taman Profesor", type: "Taman Kota", coords: [110.3941724, -7.0503381], radius: 500 },
+  { name: "Taman Waduk Diponegoro", type: "Taman Kota", coords: [110.4458939, -7.0530817], radius: 500 },
+  { name: "Taman Berlian Suejuuuk", type: "Taman Kota", coords: [110.4604191, -7.0323213], radius: 500 },
+  { name: "Taman Basuki Mowobeyo", type: "Taman Kota", coords: [110.4752945, -7.0065007], radius: 500 },
+  { name: "Taman Kecamatan Ngaliyan", type: "Taman Kota", coords: [110.3470688, -6.9967443], radius: 500 },
+  { name: "Taman Wismasari", type: "Taman Kota", coords: [110.3482244, -6.9993304], radius: 500 },
+  { name: "Taman Belimbing I", type: "Taman Kota", coords: [110.3076125, -7.0727315], radius: 500 },
+  { name: "Taman Mijen", type: "Taman Kota", coords: [110.3088463, -7.0775145], radius: 500 },
+  { name: "Taman Yudistira", type: "Taman Kota", coords: [110.4081214, -6.9824084], radius: 500 },
+  { name: "Taman Sekar Jagad", type: "Taman Kota", coords: [110.4634528, -6.9826047], radius: 500 },
+  { name: "Taman RW VII Ngaliyan Semarang", type: "Taman Kota", coords: [110.3507489, -7.0016526], radius: 500 },
+  { name: "Taman Rumah Kita", type: "Taman Kota", coords: [110.4405357, -7.049071], radius: 500 },
+  { name: "Taman Amongrogo", type: "Taman Kota", coords: [110.3857377, -7.1042937], radius: 500 },
+  { name: "Taman Bakti Persada Indah", type: "Taman Kota", coords: [110.3552816, -6.9935409], radius: 500 },
+  { name: "Taman Bakti Persada Indah", type: "Taman Kota", coords: [110.3565077, -6.9937833], radius: 500 },
+  { name: "Taman Srikaton", type: "Taman Kota", coords: [110.3647758, -6.9948906], radius: 500 },
+  { name: "Taman Srikaton Timur I", type: "Taman Kota", coords: [110.3650555, -6.99406], radius: 500 },
+  { name: "Taman Toga", type: "Taman Kota", coords: [110.3558523, -6.9925506], radius: 500 },
+  { name: "Taman Aster", type: "Taman Kota", coords: [110.3549644, -6.9929698], radius: 500 },
+  { name: "Taman USM", type: "Taman Kota", coords: [110.4358832, -7.0683794], radius: 500 },
+  { name: "Taman Bangetayu", type: "Taman Kota", coords: [110.4773981, -6.9832481], radius: 500 },
+  { name: "Taman Prima", type: "Taman Kota", coords: [110.4330398, -7.0636005], radius: 500 },
+  { name: "Taman Pesona", type: "Taman Kota", coords: [110.4312236, -7.0600809], radius: 500 },
+  { name: "Taman Sendangmulyo", type: "Taman Kota", coords: [110.4718899, -7.0359681], radius: 500 },
+  { name: "Taman Villa Ngaliyan Permai", type: "Taman Kota", coords: [110.3528116, -6.9915367], radius: 500 },
+  { name: "Taman Duta Indah", type: "Taman Kota", coords: [110.4182218, -7.0765543], radius: 500 },
+  { name: "Taman Jeruk I", type: "Taman Kota", coords: [110.3082909, -7.0723274], radius: 500 },
+  { name: "Taman Delima III", type: "Taman Kota", coords: [110.306177, -7.0734298], radius: 500 },
+  { name: "Taman Delima II", type: "Taman Kota", coords: [110.3067552, -7.0731749], radius: 500 },
+  { name: "Taman Delima I", type: "Taman Kota", coords: [110.3071834, -7.0728998], radius: 500 },
+  { name: "Taman Belimbing II", type: "Taman Kota", coords: [110.308494, -7.0731412], radius: 500 },
+  { name: "Taman Jeruk II", type: "Taman Kota", coords: [110.3089473, -7.0728522], radius: 500 },
+  { name: "Taman Akasia II", type: "Taman Kota", coords: [110.3054088, -7.0705844], radius: 500 },
+  { name: "Taman Cemara", type: "Taman Kota", coords: [110.3058256, -7.0719095], radius: 500 },
+  { name: "Taman Cemara I", type: "Taman Kota", coords: [110.3079631, -7.0711503], radius: 500 },
+  { name: "Taman Cemara II", type: "Taman Kota", coords: [110.3074603, -7.0708195], radius: 500 },
+  { name: "Taman Beringin I", type: "Taman Kota", coords: [110.3072604, -7.0704933], radius: 500 },
+  { name: "Taman Jati II", type: "Taman Kota", coords: [110.3057718, -7.0689582], radius: 500 },
+  { name: "Taman Mangga", type: "Taman Kota", coords: [110.3093554, -7.0701347], radius: 500 },
+  { name: "Taman Rambutan I", type: "Taman Kota", coords: [110.3087143, -7.0695204], radius: 500 },
+  { name: "Taman Durian I", type: "Taman Kota", coords: [110.3080626, -7.068868], radius: 500 },
+  { name: "Taman Durian II", type: "Taman Kota", coords: [110.307824, -7.0683621], radius: 500 },
+  { name: "Taman Parkit I", type: "Taman Kota", coords: [110.3087536, -7.066723], radius: 500 },
+  { name: "Taman Parkit II", type: "Taman Kota", coords: [110.3080346, -7.0669567], radius: 500 },
+  { name: "Taman Gelatik II", type: "Taman Kota", coords: [110.3073114, -7.067127], radius: 500 },
+  { name: "Taman Gelatik I", type: "Taman Kota", coords: [110.3068654, -7.0668564], radius: 500 },
+  { name: "Taman Sri Gunting II", type: "Taman Kota", coords: [110.3066741, -7.0672798], radius: 500 },
+  { name: "Taman Sri Gunting I", type: "Taman Kota", coords: [110.3071185, -7.0680729], radius: 500 },
+  { name: "Taman Kenari I", type: "Taman Kota", coords: [110.3077968, -7.0679281], radius: 500 },
+  { name: "Taman Kenari II", type: "Taman Kota", coords: [110.3076202, -7.0676736], radius: 500 },
+  { name: "Taman Toga PKK RT 09 RW VI", type: "Taman Kota", coords: [110.3409933, -6.9970879], radius: 500 },
+  { name: "Taman Toga RW VII", type: "Taman Kota", coords: [110.4262397, -7.0355998], radius: 500 },
+  { name: "Taman Green Oase", type: "Taman Kota", coords: [110.353834, -6.9818283], radius: 500 },
+  { name: "Taman Callista", type: "Taman Kota", coords: [110.3367861, -7.0060684], radius: 500 },
+  { name: "Taman Wulan", type: "Taman Kota", coords: [110.3378865, -7.0010452], radius: 500 },
+  { name: "Taman Oktagon", type: "Taman Kota", coords: [110.3285834, -6.9995146], radius: 500 },
+  { name: "Taman Citra Grand", type: "Taman Kota", coords: [110.4562237, -7.0369957], radius: 500 },
+  
+  { name: "Taman PKK", type: "Taman Kota", coords: [110.4572431, -7.0331131], radius: 500 },
+  { name: "Taman Alamanda", type: "Taman Kota", coords: [110.3648704, -6.9690479], radius: 500 },
+  { name: "Taman Raflesia", type: "Taman Kota", coords: [110.3619382, -6.97473], radius: 500 },
+  { name: "Taman Pondok Ijo", type: "Taman Kota", coords: [110.3370104, -7.0174467], radius: 500 },
+  { name: "Taman Sawunggaling", type: "Taman Kota", coords: [110.4339287, -7.0719277], radius: 500 },
+  { name: "Taman Ceria", type: "Taman Kota", coords: [110.4310186, -7.0638356], radius: 500 },
+  { name: "Taman Villa Mulawarman", type: "Taman Kota", coords: [110.4405151, -7.0725364], radius: 500 },
+  { name: "Taman Villa Mulawarman", type: "Taman Kota", coords: [110.4406691, -7.0722382], radius: 500 },
+  { name: "Taman Duta Bukit Mas", type: "Taman Kota", coords: [110.4194471, -7.0757988], radius: 500 },
+  { name: "Taman Srondol Bumi Indah (Masjid At Taqwa)", type: "Taman Kota", coords: [110.4198038, -7.0547552], radius: 500 },
+  { name: "Taman Bukit Cemara Residence", type: "Taman Kota", coords: [110.4494085, -7.0670542], radius: 500 },
+  { name: "Taman Stadion Undip", type: "Taman Kota", coords: [110.4458533, -7.0551644], radius: 500 },
+  { name: "Taman Trunojoyo", type: "Taman Kota", coords: [110.4245178, -7.0731986], radius: 500 },
+  { name: "Taman Lapangan Kalisari", type: "Taman Kota", coords: [110.4065856, -6.9904152], radius: 500 },
+  { name: "Taman Makam Gajah Mungkur", type: "Taman Kota", coords: [110.4086371, -7.0063448], radius: 500 },
+  { name: "Taman GKJ Mrican", type: "Taman Kota", coords: [110.4361988, -7.0093518], radius: 500 },
+  { name: "Taman Gereja Karangpanas", type: "Taman Kota", coords: [110.4240425, -7.0211508], radius: 500 },
+  { name: "Hutan Mini", type: "Taman Kota", coords: [110.3932473, -7.0493565], radius: 500 },
+  { name: "Taman Kota Lama (ex Hotel Jansen)", type: "Taman Kota", coords: [110.4289869, -6.9674988], radius: 500 },
+  { name: "Taman Mugas Barat IX", type: "Taman Kota", coords: [110.4155406, -6.990086], radius: 500 },
+  { name: "Taman Mayangsari", type: "Taman Kota", coords: [110.3830436, -7.0171647], radius: 500 },
+  { name: "Taman Toga", type: "Taman Kota", coords: [110.3672655, -6.9850657], radius: 500 },
+  { name: "Taman Wisata Waduk Jatibarang", type: "Taman Kota", coords: [110.3534889, -7.0411037], radius: 500 },
+  { name: "Taman Bukit Cemara Residence", type: "Taman Kota", coords: [110.4486059, -7.0691453], radius: 500 }
+];
+
+  const rthRekomendasi = [
+  { name: "Titik 1", type: "Rekomendasi RTH", coords: [110.41479, -6.95459] },
+  { name: "Titik 2", type: "Rekomendasi RTH", coords: [110.48140, -6.95163] },
+  { name: "Titik 3", type: "Rekomendasi RTH", coords: [110.46669, -7.00036] },
+  { name: "Titik 4", type: "Rekomendasi RTH", coords: [110.38634, -6.98368] },
+  { name: "Titik 5", type: "Rekomendasi RTH", coords: [110.42792, -6.94972] },
+  { name: "Titik 6", type: "Rekomendasi RTH", coords: [110.45376, -6.95784] },
+  { name: "Titik 7", type: "Rekomendasi RTH", coords: [110.47327, -6.96414] },
+  { name: "Titik 8", type: "Rekomendasi RTH", coords: [110.48058, -6.97358] },
+  { name: "Titik 9", type: "Rekomendasi RTH", coords: [110.46093, -6.97883] },
+  { name: "Titik 10", type: "Rekomendasi RTH", coords: [110.45707, -6.99790] },
+  { name: "Titik 11", type: "Rekomendasi RTH", coords: [110.39486, -6.95459] },
+  { name: "Titik 12", type: "Rekomendasi RTH", coords: [110.42990, -6.96892] },
+  { name: "Titik 13", type: "Rekomendasi RTH", coords: [110.40799, -6.98437] },
+  { name: "Titik 14", type: "Rekomendasi RTH", coords: [110.41612, -6.96659] },
+  { name: "Titik 15", type: "Rekomendasi RTH", coords: [110.40410, -6.96827] },
+  { name: "Titik 16", type: "Rekomendasi RTH", coords: [110.44606, -6.98055] },
+  { name: "Titik 17", type: "Rekomendasi RTH", coords: [110.45948, -7.01536] }
+];
+  rthRekomendasi.forEach((rth) => {
+  new mapboxgl.Marker({ color: 'blue' })
+    .setLngLat(rth.coords)
+    .setPopup(new mapboxgl.Popup().setHTML(
+      `<strong>${rth.name}</strong><br><em>${rth.type}</em>`
+    ))
+    .addTo(map);
+});
+
+  navigator.geolocation.getCurrentPosition(position => {
+    const userLocation = [position.coords.longitude, position.coords.latitude];
+    directions.setOrigin(userLocation);
+    new mapboxgl.Marker({ color: 'red' })
+      .setLngLat(userLocation)
+      .setPopup(new mapboxgl.Popup().setText("Lokasi Anda"))
+      .addTo(map);
+  }, () => {
+    alert("Gagal mengakses lokasi. Pastikan izin lokasi diaktifkan.");
+  });
+
+ map.on('load', () => {
+  rthData.forEach(async (rth, index) => {
+    // Dapatkan alamat dari koordinat
+    const address = await getAddressFromCoordinates(rth.coords[0], rth.coords[1]);
+
+    // Tambahkan marker dengan alamat di popup
+    new mapboxgl.Marker({ color: 'green' })
+      .setLngLat(rth.coords)
+      .setPopup(new mapboxgl.Popup().setHTML(
+        `<strong>${rth.name}</strong><br><em>${rth.type}</em><br><small>${address}</small>`
+      ))
+      .addTo(map);
+
+    // Buat buffer 500 meter dengan turf.js
+    const circle = turf.circle(rth.coords, 0.5, {
+      steps: 64,
+      units: 'kilometers'
+    });
+
+    map.addSource(`circle-${index}`, {
+      type: 'geojson',
+      data: circle
+    });
+
+    map.addLayer({
+      id: `circle-layer-${index}`,
+      type: 'fill',
+      source: `circle-${index}`,
+      paint: {
+        'fill-color': '#A5D6A7',
+        'fill-opacity': 0.4
+      }
+    });
+
+    map.addLayer({
+      id: `circle-outline-${index}`,
+      type: 'line',
+      source: `circle-${index}`,
+      paint: {
+        'line-color': '#006400',
+        'line-width': 1
+      }
+    });
+  });
+});
+
+</script>
+</body>
+
+</html>
