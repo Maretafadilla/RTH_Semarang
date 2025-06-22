@@ -146,7 +146,34 @@
   color: #333;
   font-size: 14px;
 }
+.mapboxgl-ctrl.custom-controls {
+    display: flex;
+    flex-direction: column;
+    width: 32px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
 
+  .mapboxgl-ctrl.custom-controls button {
+    height: 32px;
+    background: white;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .mapboxgl-ctrl.custom-controls button:hover {
+    background-color: #eee;
+  }
+
+  .mapboxgl-ctrl.custom-controls button:active {
+    background-color: #ddd;
+  }
 </style>
 <link
   rel="stylesheet"
@@ -386,6 +413,33 @@
   });
   map.addControl(directions, 'top-right');
 
+const customZoomControl = {
+  onAdd: function(map) {
+    this._map = map;
+    const container = document.createElement('div');
+    container.className = 'mapboxgl-ctrl custom-controls';
+
+    const zoomInBtn = document.createElement('button');
+    zoomInBtn.innerHTML = '+';
+    zoomInBtn.onclick = () => map.zoomIn();
+
+    const zoomOutBtn = document.createElement('button');
+    zoomOutBtn.innerHTML = '−';
+    zoomOutBtn.onclick = () => map.zoomOut();
+
+    container.appendChild(zoomInBtn);
+    container.appendChild(zoomOutBtn);
+
+    return container;
+  },
+  onRemove: function() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+};
+
+map.addControl(customZoomControl, 'top-left'); 
+  
   const rthData = [
   { name: "Taman Tirto Agung Semarang", type: "Taman Kota", coords: [110.42708, -7.0642656], radius: 500 },
   { name: "Taman Teknik", type: "Taman Kota", coords: [110.4408029, -7.0508766], radius: 500 },
